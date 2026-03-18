@@ -1,0 +1,86 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\ParkingSession;
+use App\Models\ParkingSpot;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class ParkingDashboardTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_dashboard_loads_spots(): void
+    {
+        $spot = ParkingSpot::query()->create([
+            'code' => 'A-01',
+            'zone' => 'Norte',
+            'is_active' => true,
+        ]);
+
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $response->assertSee('Estacionamiento A');
+        $response->assertSee($spot->code);
+    }
+
+    public function test_history_module_loads_sessions(): void
+    {
+        $spot = ParkingSpot::query()->create([
+            'code' => 'C-01',
+            'zone' => 'Sur',
+            'is_active' => true,
+        ]);
+
+        ParkingSession::query()->create([
+            'parking_spot_id' => $spot->id,
+            'plate_number' => 'HIS123',
+            'driver_name' => 'Maria',
+            'vehicle_type' => 'Auto',
+            'entry_time' => now()->subHour(),
+            'exit_time' => now(),
+            'hourly_rate' => 25,
+            'total_amount' => 25,
+        ]);
+
+        $response = $this->get(route('history.index'));
+
+        $response->assertOk();
+        $response->assertSee('Historial de Movimientos');
+        $response->assertSee('HIS123');
+    }
+
+    public function test_vehicle_can_check_in_and_out(): void
+    {
+        $spot = ParkingSpot::query()->create([
+            'code' => 'B-01',
+            'zone' => 'Centro',
+            'is_active' => true,
+        ]);
+
+        $this->post(route('sessions.check-in'), [
+            'parking_spot_id' => $spot->id,
+            'plate_number' => 'XYZ123',
+            'driver_name' => 'Alex',
+            'vehicle_type' => 'Auto',
+            'hourly_rate' => 30,
+            'notes' => 'Prueba',
+        ])->assertRedirect(route('dashboard'));
+
+        $session = ParkingSession::query()->first();
+
+        $this->assertNotNull($session);
+        $this->assertNull($session->exit_time);
+        $this->assertSame('XYZ123', $session->plate_number);
+
+        $this->patch(route('sessions.check-out', $session))
+            ->assertRedirect(route('dashboard'));
+
+        $session->refresh();
+
+        $this->assertNotNull($session->exit_time);
+        $this->assertNotNull($session->total_amount);
+    }
+}
