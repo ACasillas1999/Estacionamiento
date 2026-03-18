@@ -61,6 +61,13 @@
         .content-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start}
         .tips,.vehicle-list{display:grid;gap:12px}.tip,.vehicle{padding:14px;border-radius:14px;background:var(--panel-soft);border:1px solid var(--border)}.tip strong{display:block;color:var(--text);margin-bottom:4px}
         .alert{padding:14px 16px;border-radius:14px;margin-bottom:18px}.alert.success{background:rgba(16,185,129,.14);color:#6ee7b7;border:1px solid rgba(16,185,129,.25)}.alert.error{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.24)}.alert.error ul{margin:8px 0 0 18px;padding:0}
+        .toast-stack{position:fixed;top:18px;right:18px;z-index:80;display:grid;gap:12px;pointer-events:none}
+        .toast{min-width:min(360px,calc(100vw - 32px));max-width:420px;padding:14px 16px;border-radius:16px;border:1px solid rgba(16,185,129,.28);background:rgba(5,18,34,.94);box-shadow:0 18px 50px rgba(0,0,0,.35);display:flex;align-items:flex-start;justify-content:space-between;gap:14px;pointer-events:auto}
+        .toast-success{box-shadow:0 18px 50px rgba(0,0,0,.35),0 0 0 1px rgba(16,185,129,.12)}
+        .toast-copy{display:grid;gap:3px}
+        .toast-copy strong{font-size:.86rem;letter-spacing:.04em;text-transform:uppercase;color:#6ee7b7}
+        .toast-copy span{color:#e2e8f0}
+        .toast-close{width:34px;height:34px;border-radius:10px;padding:0;flex-shrink:0}
         .form-grid{display:grid;gap:14px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:6px}.field label{font-size:.85rem;color:var(--muted)} input,select,textarea,button{font:inherit} input,select,textarea{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--border);background:#0f172a;color:var(--text)} textarea{min-height:86px;resize:vertical}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 14px;cursor:pointer;transition:.18s ease;font-weight:600;text-decoration:none;text-align:center}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--blue);color:white}.btn-secondary{background:rgba(148,163,184,.14);color:var(--text)}.btn-success{background:var(--green);color:white}.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
         .help-btn{width:44px;height:44px;padding:0;border-radius:999px;font-size:1.2rem;line-height:1;background:rgba(148,163,184,.14);color:var(--text)}
@@ -73,12 +80,20 @@
 </head>
 <body>
     <div class="page">
+        @if (session('status'))
+            <div class="toast-stack">
+                <div class="toast toast-success" data-toast>
+                    <div class="toast-copy">
+                        <strong>Operacion completada</strong>
+                        <span>{{ session('status') }}</span>
+                    </div>
+                    <button type="button" class="btn btn-ghost toast-close" data-dismiss-toast>Cerrar</button>
+                </div>
+            </div>
+        @endif
+
         <section class="app-grid">
             <aside class="sidebar">
-                @if (session('status'))
-                    <div class="alert success">{{ session('status') }}</div>
-                @endif
-
                 <div class="sidebar-brand">
                     <div class="sidebar-kicker">
                         <span class="sidebar-logo"></span>
@@ -383,6 +398,7 @@
         const spotModal = document.getElementById('spot-modal');
         const helpModal = document.getElementById('help-modal');
         const liveSessions = document.querySelectorAll('.live-session');
+        const toast = document.querySelector('[data-toast]');
         const spotIdInput = document.getElementById('parking_spot_id');
         const selectedSpotLabel = document.getElementById('selected-spot-label');
         const spotActionButton = document.querySelector('[data-open-spot-modal]');
@@ -463,6 +479,12 @@
             syncBodyScroll();
         }
 
+        function closeToast() {
+            if (toast) {
+                toast.closest('.toast-stack')?.remove();
+            }
+        }
+
         document.querySelectorAll('.spot-trigger').forEach((button) => {
             button.addEventListener('click', () => {
                 openCheckInModal(button.dataset.spotId, button.dataset.spotCode, button.dataset.spotZone);
@@ -481,6 +503,10 @@
             button.addEventListener('click', () => closeModal(button.dataset.closeModal));
         });
 
+        document.querySelectorAll('[data-dismiss-toast]').forEach((button) => {
+            button.addEventListener('click', closeToast);
+        });
+
         window.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 if (!checkInModal.hidden) closeModal('check-in-modal');
@@ -491,6 +517,9 @@
 
         updateLiveSessions();
         setInterval(updateLiveSessions, 1000);
+        if (toast) {
+            setTimeout(closeToast, 3200);
+        }
         syncBodyScroll();
     </script>
 </body>

@@ -84,6 +84,28 @@ class ParkingDashboardTest extends TestCase
         $this->assertNotNull($session->total_amount);
     }
 
+    public function test_check_in_success_message_is_rendered_as_toast(): void
+    {
+        $spot = ParkingSpot::query()->create([
+            'code' => 'D-01',
+            'zone' => 'Centro',
+            'is_active' => true,
+        ]);
+
+        $response = $this->followingRedirects()->post(route('sessions.check-in'), [
+            'parking_spot_id' => $spot->id,
+            'plate_number' => 'POP123',
+            'driver_name' => 'Luis',
+            'vehicle_type' => 'Auto',
+            'hourly_rate' => 25,
+        ]);
+
+        $response->assertOk();
+        $response->assertSee('Entrada registrada correctamente.');
+        $response->assertSee('data-toast', false);
+        $response->assertDontSee('<div class="alert success">', false);
+    }
+
     public function test_dashboard_shows_live_elapsed_time_and_current_amount_for_open_sessions(): void
     {
         $spot = ParkingSpot::query()->create([
