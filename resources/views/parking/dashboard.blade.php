@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Estacionamiento A</title>
+    <title>Estacionamiento</title>
     <style>
         :root{--bg:#0b1120;--panel:rgba(15,23,42,.78);--panel-soft:rgba(30,41,59,.4);--border:rgba(148,163,184,.12);--text:#f8fafc;--muted:#94a3b8;--blue:#3b82f6;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--radius:20px;--shadow:0 18px 50px rgba(0,0,0,.28);--side:#354867;--side-dark:#2a3b55;--side-line:rgba(255,255,255,.08);}
         *{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 0% 0%,rgba(59,130,246,.15),transparent 40%),radial-gradient(circle at 100% 100%,rgba(16,185,129,.1),transparent 40%),var(--bg);color:var(--text);min-height:100vh;line-height:1.5;overflow:hidden}
@@ -84,7 +84,7 @@
                         <span class="sidebar-logo"></span>
                         <span>Parking Navigation</span>
                     </div>
-                    <h2>Estacionamiento A</h2>
+                    <h2>Estacionamiento</h2>
                     <p>Entradas, salidas y monitoreo del mapa en una sola vista.</p>
                 </div>
 
