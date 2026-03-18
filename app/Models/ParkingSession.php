@@ -37,14 +37,28 @@ class ParkingSession extends Model
         return $this->exit_time === null;
     }
 
+    public function billedMinutes(?CarbonInterface $endTime = null): int
+    {
+        $endTime ??= $this->exit_time ?? now();
+
+        return max(1, $this->entry_time->diffInMinutes($endTime));
+    }
+
+    public function billedHours(?CarbonInterface $endTime = null): int
+    {
+        return (int) ceil($this->billedMinutes($endTime) / 60);
+    }
+
+    public function currentAmount(?CarbonInterface $endTime = null): float
+    {
+        return $this->billedHours($endTime) * (float) $this->hourly_rate;
+    }
+
     public function close(CarbonInterface $exitTime): void
     {
-        $minutes = max(1, $this->entry_time->diffInMinutes($exitTime));
-        $hours = (int) ceil($minutes / 60);
-
         $this->forceFill([
             'exit_time' => $exitTime,
-            'total_amount' => $hours * (float) $this->hourly_rate,
+            'total_amount' => $this->currentAmount($exitTime),
         ])->save();
     }
 }

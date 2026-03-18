@@ -83,4 +83,29 @@ class ParkingDashboardTest extends TestCase
         $this->assertNotNull($session->exit_time);
         $this->assertNotNull($session->total_amount);
     }
+
+    public function test_dashboard_shows_live_elapsed_time_and_current_amount_for_open_sessions(): void
+    {
+        $spot = ParkingSpot::query()->create([
+            'code' => 'A-01',
+            'zone' => 'Norte',
+            'is_active' => true,
+        ]);
+
+        ParkingSession::query()->create([
+            'parking_spot_id' => $spot->id,
+            'plate_number' => 'ABC123',
+            'driver_name' => 'Maria',
+            'vehicle_type' => 'Auto',
+            'entry_time' => now()->subMinutes(47),
+            'hourly_rate' => 30,
+        ]);
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertOk();
+        $response->assertSee('ABC123');
+        $response->assertSee('00:47:00', false);
+        $response->assertSee('$30.00', false);
+    }
 }

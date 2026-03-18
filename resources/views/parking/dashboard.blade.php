@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Estacionamiento</title>
+    <title>Estacionamiento A</title>
     <style>
         :root{--bg:#0b1120;--panel:rgba(15,23,42,.78);--panel-soft:rgba(30,41,59,.4);--border:rgba(148,163,184,.12);--text:#f8fafc;--muted:#94a3b8;--blue:#3b82f6;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--radius:20px;--shadow:0 18px 50px rgba(0,0,0,.28);--side:#354867;--side-dark:#2a3b55;--side-line:rgba(255,255,255,.08);}
         *{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 0% 0%,rgba(59,130,246,.15),transparent 40%),radial-gradient(circle at 100% 100%,rgba(16,185,129,.1),transparent 40%),var(--bg);color:var(--text);min-height:100vh;line-height:1.5;overflow:hidden}
@@ -64,8 +64,8 @@
         .form-grid{display:grid;gap:14px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:6px}.field label{font-size:.85rem;color:var(--muted)} input,select,textarea,button{font:inherit} input,select,textarea{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--border);background:#0f172a;color:var(--text)} textarea{min-height:86px;resize:vertical}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 14px;cursor:pointer;transition:.18s ease;font-weight:600;text-decoration:none;text-align:center}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--blue);color:white}.btn-secondary{background:rgba(148,163,184,.14);color:var(--text)}.btn-success{background:var(--green);color:white}.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
         .help-btn{width:44px;height:44px;padding:0;border-radius:999px;font-size:1.2rem;line-height:1;background:rgba(148,163,184,.14);color:var(--text)}
-        .spots{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px}.spot{width:100%;padding:16px 14px;border-radius:16px;border:1px solid var(--border);background:var(--panel-soft);text-align:center;color:var(--text)}.spot-code{font-size:1.35rem;font-weight:700}.spot-zone{margin:4px 0 12px;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}.badge::before{content:"";width:8px;height:8px;border-radius:999px;background:currentColor}.spot.free{border-top:3px solid var(--green);cursor:pointer}.spot.free:hover{border-color:rgba(59,130,246,.5);transform:translateY(-3px)}.spot.free .badge{background:rgba(16,185,129,.12);color:var(--green)}.spot.busy{border-top:3px solid var(--amber)}.spot.busy .badge{background:rgba(245,158,11,.12);color:var(--amber)}.spot.off{border-top:3px solid var(--red);opacity:.7}.spot.off .badge{background:rgba(239,68,68,.12);color:var(--red)}.spot-note{margin-top:10px;color:#7dd3fc;font-size:.78rem}.plate-chip{margin-top:10px;display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(2,6,23,.5);border:1px dashed rgba(148,163,184,.25);font-family:Consolas,monospace;font-size:.82rem}
-        .vehicles-panel{position:sticky;top:18px}.vehicle{display:flex;justify-content:space-between;align-items:center;gap:14px}.vehicle-id strong{display:block;font-family:Consolas,monospace;font-size:1.05rem}.vehicle-id span,.vehicle-meta{color:var(--muted);font-size:.9rem}.vehicle-empty{padding:20px;border-radius:14px;border:1px dashed var(--border);color:var(--muted);text-align:center}
+        .spots{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px}.spot{width:100%;padding:16px 14px;border-radius:16px;border:1px solid var(--border);background:var(--panel-soft);text-align:center;color:var(--text)}.spot-code{font-size:1.35rem;font-weight:700}.spot-zone{margin:4px 0 12px;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}.badge::before{content:"";width:8px;height:8px;border-radius:999px;background:currentColor}.spot.free{border-top:3px solid var(--green);cursor:pointer}.spot.free:hover{border-color:rgba(59,130,246,.5);transform:translateY(-3px)}.spot.free .badge{background:rgba(16,185,129,.12);color:var(--green)}.spot.busy{border-top:3px solid var(--amber)}.spot.busy .badge{background:rgba(245,158,11,.12);color:var(--amber)}.spot.off{border-top:3px solid var(--red);opacity:.7}.spot.off .badge{background:rgba(239,68,68,.12);color:var(--red)}.spot-note{margin-top:10px;color:#7dd3fc;font-size:.78rem}.plate-chip{margin-top:10px;display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(2,6,23,.5);border:1px dashed rgba(148,163,184,.25);font-family:Consolas,monospace;font-size:.82rem}.spot-live{margin-top:10px;display:grid;gap:4px;font-size:.74rem;color:#c7d7ec}.spot-live strong{color:#fff;font-size:.9rem}
+        .vehicles-panel{position:sticky;top:18px}.vehicle{display:flex;justify-content:space-between;align-items:center;gap:14px}.vehicle-id strong{display:block;font-family:Consolas,monospace;font-size:1.05rem}.vehicle-id span,.vehicle-meta{color:var(--muted);font-size:.9rem}.vehicle-live{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px 14px;font-size:.84rem;color:#c7d7ec}.vehicle-live strong{color:#fff}.vehicle-empty{padding:20px;border-radius:14px;border:1px dashed var(--border);color:var(--muted);text-align:center}
         .modal[hidden]{display:none}.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:18px}.modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,.72);backdrop-filter:blur(6px)}.modal-card{position:relative;z-index:1;width:min(100%,640px);padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.modal-head h3{margin:0 0 6px}.modal-head p{margin:0;color:var(--muted)}.selected{display:inline-flex;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(59,130,246,.14);color:#93c5fd;margin-bottom:14px}
         @media (max-width:1100px){body{overflow:auto}.app-grid{grid-template-columns:1fr;height:auto}.sidebar{position:static;height:auto;border:1px solid var(--side-line);border-radius:0 0 22px 22px}.main-shell{padding:0 16px 24px;height:auto;overflow:visible}.content-grid{grid-template-columns:1fr}.vehicles-panel{position:static}}
         @media (max-width:640px){.main-shell{padding:0 12px 24px}.form-row{grid-template-columns:1fr}.vehicle{flex-direction:column;align-items:stretch;text-align:center}}
@@ -84,7 +84,7 @@
                         <span class="sidebar-logo"></span>
                         <span>Parking Navigation</span>
                     </div>
-                    <h2>Estacionamiento</h2>
+                    <h2>Estacionamiento A</h2>
                     <p>Entradas, salidas y monitoreo del mapa en una sola vista.</p>
                 </div>
 
@@ -146,12 +146,14 @@
             <main class="main-shell">
 
                 <section class="content-grid">
-                <section class="panel">
+                    <section class="panel">
                     <h2>Mapa de cajones</h2>
                     <p>Selecciona un cajon libre para registrar una nueva entrada.</p>
                     <div class="spots">
                         @forelse ($spots as $spot)
-                            @php($statusClass = ! $spot->is_active ? 'off' : ($spot->activeSession ? 'busy' : 'free'))
+                            @php
+                                $statusClass = ! $spot->is_active ? 'off' : ($spot->activeSession ? 'busy' : 'free');
+                            @endphp
                             @if (! $spot->is_active)
                                 <div class="spot {{ $statusClass }}">
                                     <div class="spot-code">{{ $spot->code }}</div>
@@ -159,11 +161,24 @@
                                     <div class="badge">Fuera</div>
                                 </div>
                             @elseif ($spot->activeSession)
+                                @php
+                                    $activeMinutes = $spot->activeSession->billedMinutes();
+                                    $activeHours = intdiv($activeMinutes, 60);
+                                    $activeRemainder = $activeMinutes % 60;
+                                @endphp
                                 <div class="spot {{ $statusClass }}">
                                     <div class="spot-code">{{ $spot->code }}</div>
                                     <div class="spot-zone">{{ $spot->zone ?: 'Sin zona' }}</div>
                                     <div class="badge">Ocupado</div>
                                     <div class="plate-chip">{{ $spot->activeSession->plate_number }}</div>
+                                    <div
+                                        class="spot-live live-session"
+                                        data-entry-time="{{ $spot->activeSession->entry_time->toIso8601String() }}"
+                                        data-hourly-rate="{{ $spot->activeSession->hourly_rate }}"
+                                    >
+                                        <span>Tiempo <strong data-live-elapsed>{{ sprintf('%02d:%02d:00', $activeHours, $activeRemainder) }}</strong></span>
+                                        <span>Costo <strong data-live-cost>${{ number_format($spot->activeSession->currentAmount(), 2) }}</strong></span>
+                                    </div>
                                 </div>
                             @else
                                 <button
@@ -185,34 +200,47 @@
                     </div>
                 </section>
 
-                <section class="panel vehicles-panel">
-                    <h2>Vehiculos dentro</h2>
-                    <div class="vehicle-list">
-                        @forelse ($occupiedSpots as $spot)
-                            <article class="vehicle">
-                                <div>
-                                    <div class="vehicle-id">
-                                        <strong>{{ $spot->activeSession->plate_number }}</strong>
-                                        <span>Cajon {{ $spot->code }}</span>
+                    <section class="panel vehicles-panel">
+                        <h2>Vehiculos dentro</h2>
+                        <div class="vehicle-list">
+                            @forelse ($occupiedSpots as $spot)
+                                @php
+                                    $vehicleMinutes = $spot->activeSession->billedMinutes();
+                                    $vehicleHours = intdiv($vehicleMinutes, 60);
+                                    $vehicleRemainder = $vehicleMinutes % 60;
+                                @endphp
+                                <article class="vehicle">
+                                    <div>
+                                        <div class="vehicle-id">
+                                            <strong>{{ $spot->activeSession->plate_number }}</strong>
+                                            <span>Cajon {{ $spot->code }}</span>
+                                        </div>
+                                        <div class="vehicle-meta">
+                                            {{ $spot->activeSession->vehicle_type }} - Entrada {{ $spot->activeSession->entry_time->format('H:i') }}
+                                            @if ($spot->activeSession->driver_name)
+                                                - {{ $spot->activeSession->driver_name }}
+                                            @endif
+                                        </div>
+                                        <div
+                                            class="vehicle-live live-session"
+                                            data-entry-time="{{ $spot->activeSession->entry_time->toIso8601String() }}"
+                                            data-hourly-rate="{{ $spot->activeSession->hourly_rate }}"
+                                        >
+                                            <span>Tiempo <strong data-live-elapsed>{{ sprintf('%02d:%02d:00', $vehicleHours, $vehicleRemainder) }}</strong></span>
+                                            <span>Costo actual <strong data-live-cost>${{ number_format($spot->activeSession->currentAmount(), 2) }}</strong></span>
+                                        </div>
                                     </div>
-                                    <div class="vehicle-meta">
-                                        {{ $spot->activeSession->vehicle_type }} - Entrada {{ $spot->activeSession->entry_time->format('H:i') }}
-                                        @if ($spot->activeSession->driver_name)
-                                            - {{ $spot->activeSession->driver_name }}
-                                        @endif
-                                    </div>
-                                </div>
-                                <form method="POST" action="{{ route('sessions.check-out', $spot->activeSession) }}">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-success">Dar salida</button>
-                                </form>
-                            </article>
-                        @empty
-                        <div class="vehicle-empty">No hay vehiculos dentro en este momento.</div>
-                    @endforelse
-                </div>
-                </section>
+                                    <form method="POST" action="{{ route('sessions.check-out', $spot->activeSession) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-success">Dar salida</button>
+                                    </form>
+                                </article>
+                            @empty
+                                <div class="vehicle-empty">No hay vehiculos dentro en este momento.</div>
+                            @endforelse
+                        </div>
+                    </section>
                 </section>
             </main>
         </section>
@@ -354,6 +382,7 @@
         const checkInModal = document.getElementById('check-in-modal');
         const spotModal = document.getElementById('spot-modal');
         const helpModal = document.getElementById('help-modal');
+        const liveSessions = document.querySelectorAll('.live-session');
         const spotIdInput = document.getElementById('parking_spot_id');
         const selectedSpotLabel = document.getElementById('selected-spot-label');
         const spotActionButton = document.querySelector('[data-open-spot-modal]');
@@ -372,6 +401,39 @@
 
         if (sidebarStatsTitle) {
             sidebarStatsTitle.outerHTML = '<div class="stats-title">Resumen actual</div>';
+        }
+
+        function formatElapsed(totalSeconds) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            return [hours, minutes, seconds]
+                .map((value) => String(value).padStart(2, '0'))
+                .join(':');
+        }
+
+        function updateLiveSessions() {
+            const now = new Date();
+
+            liveSessions.forEach((session) => {
+                const entryTime = new Date(session.dataset.entryTime);
+                const hourlyRate = Number(session.dataset.hourlyRate);
+                const elapsedSeconds = Math.max(0, Math.floor((now - entryTime) / 1000));
+                const billedMinutes = Math.max(1, Math.ceil(elapsedSeconds / 60));
+                const billedHours = Math.ceil(billedMinutes / 60);
+                const currentAmount = billedHours * hourlyRate;
+                const elapsedTarget = session.querySelector('[data-live-elapsed]');
+                const costTarget = session.querySelector('[data-live-cost]');
+
+                if (elapsedTarget) {
+                    elapsedTarget.textContent = formatElapsed(elapsedSeconds);
+                }
+
+                if (costTarget) {
+                    costTarget.textContent = '$' + currentAmount.toFixed(2);
+                }
+            });
         }
 
         function syncBodyScroll() {
@@ -427,6 +489,8 @@
             }
         });
 
+        updateLiveSessions();
+        setInterval(updateLiveSessions, 1000);
         syncBodyScroll();
     </script>
 </body>
