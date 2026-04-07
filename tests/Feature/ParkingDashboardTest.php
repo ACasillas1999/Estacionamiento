@@ -52,6 +52,21 @@ class ParkingDashboardTest extends TestCase
         $response->assertSee('HIS123');
     }
 
+    public function test_layout_editor_loads(): void
+    {
+        ParkingSpot::query()->create([
+            'code' => 'L-01',
+            'zone' => 'Plano',
+            'is_active' => true,
+        ]);
+
+        $response = $this->get(route('layout.editor'));
+
+        $response->assertOk();
+        $response->assertSee('Editor de Plano');
+        $response->assertSee('L-01');
+    }
+
     public function test_vehicle_can_check_in_and_out(): void
     {
         $spot = ParkingSpot::query()->create([
@@ -104,6 +119,56 @@ class ParkingDashboardTest extends TestCase
         $response->assertSee('Entrada registrada correctamente.');
         $response->assertSee('data-toast', false);
         $response->assertDontSee('<div class="alert success">', false);
+    }
+
+    public function test_layout_can_be_updated(): void
+    {
+        $spot = ParkingSpot::query()->create([
+            'code' => 'E-01',
+            'zone' => 'Editor',
+            'is_active' => true,
+        ]);
+
+        $this->patch(route('layout.update'), [
+            'name' => 'Plano personalizado',
+            'canvas_width' => 1320,
+            'canvas_height' => 860,
+            'show_grid' => 1,
+            'decorations' => [
+                [
+                    'type' => 'label',
+                    'label' => 'Acceso norte',
+                    'x' => 40,
+                    'y' => 50,
+                    'width' => 180,
+                    'height' => 40,
+                    'rotation' => 0,
+                ],
+            ],
+            'spots' => [
+                [
+                    'id' => $spot->id,
+                    'layout_x' => 320,
+                    'layout_y' => 210,
+                    'layout_width' => 90,
+                    'layout_height' => 150,
+                    'layout_angle' => 90,
+                ],
+            ],
+        ])->assertRedirect(route('layout.editor'));
+
+        $spot->refresh();
+
+        $this->assertSame(320, $spot->layout_x);
+        $this->assertSame(210, $spot->layout_y);
+        $this->assertSame(90, $spot->layout_width);
+        $this->assertSame(150, $spot->layout_height);
+        $this->assertSame(90, $spot->layout_angle);
+        $this->assertDatabaseHas('parking_layouts', [
+            'name' => 'Plano personalizado',
+            'canvas_width' => 1320,
+            'canvas_height' => 860,
+        ]);
     }
 
     public function test_dashboard_shows_live_elapsed_time_and_current_amount_for_open_sessions(): void

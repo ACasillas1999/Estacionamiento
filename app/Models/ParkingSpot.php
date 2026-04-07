@@ -13,10 +13,20 @@ class ParkingSpot extends Model
         'code',
         'zone',
         'is_active',
+        'layout_x',
+        'layout_y',
+        'layout_width',
+        'layout_height',
+        'layout_angle',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'layout_x' => 'integer',
+        'layout_y' => 'integer',
+        'layout_width' => 'integer',
+        'layout_height' => 'integer',
+        'layout_angle' => 'integer',
     ];
 
     public function sessions(): HasMany

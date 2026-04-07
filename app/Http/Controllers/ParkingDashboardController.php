@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ParkingLayout;
 use App\Models\ParkingSession;
 use App\Models\ParkingSpot;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,7 @@ class ParkingDashboardController extends Controller
 {
     public function index(): View
     {
+        $layout = ParkingLayout::primary();
         $spots = ParkingSpot::query()
             ->with('activeSession')
             ->orderBy('code')
@@ -26,6 +28,7 @@ class ParkingDashboardController extends Controller
             ->filter(fn (ParkingSpot $spot) => $spot->activeSession !== null);
 
         return view('parking.dashboard', [
+            'layout' => $layout,
             'spots' => $spots,
             'availableSpots' => $availableSpots,
             'occupiedSpots' => $occupiedSpots,
@@ -35,6 +38,14 @@ class ParkingDashboardController extends Controller
                 'occupied' => $occupiedSpots->count(),
                 'inactive' => $spots->where('is_active', false)->count(),
             ],
+        ]);
+    }
+
+    public function layoutEditor(): View
+    {
+        return view('parking.layout-editor', [
+            'layout' => ParkingLayout::primary(),
+            'spots' => ParkingSpot::query()->orderBy('code')->get(),
         ]);
     }
 
@@ -76,9 +87,78 @@ class ParkingDashboardController extends Controller
             'code' => strtoupper($validated['code']),
             'zone' => $validated['zone'] ?? null,
             'is_active' => true,
+            ...$this->defaultSpotLayout(ParkingSpot::query()->count()),
         ]);
 
         return to_route('dashboard')->with('status', 'Cajon creado correctamente.');
+    }
+
+    public function updateLayout(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:80'],
+            'canvas_width' => ['required', 'integer', 'min:700', 'max:1800'],
+            'canvas_height' => ['required', 'integer', 'min:500', 'max:1400'],
+            'show_grid' => ['nullable', 'boolean'],
+            'spots' => ['required', 'array', 'min:1'],
+            'spots.*.id' => ['required', 'exists:parking_spots,id'],
+            'spots.*.layout_x' => ['required', 'integer', 'min:0', 'max:2000'],
+            'spots.*.layout_y' => ['required', 'integer', 'min:0', 'max:2000'],
+            'spots.*.layout_width' => ['required', 'integer', 'min:50', 'max:220'],
+            'spots.*.layout_height' => ['required', 'integer', 'min:80', 'max:280'],
+            'spots.*.layout_angle' => ['required', 'integer', 'min:-180', 'max:180'],
+            'decorations' => ['nullable', 'array'],
+            'decorations.*.type' => ['nullable', 'in:lane,island,building,label,entry'],
+            'decorations.*.label' => ['nullable', 'string', 'max:80'],
+            'decorations.*.x' => ['nullable', 'integer', 'min:0', 'max:2000'],
+            'decorations.*.y' => ['nullable', 'integer', 'min:0', 'max:2000'],
+            'decorations.*.width' => ['nullable', 'integer', 'min:10', 'max:2000'],
+            'decorations.*.height' => ['nullable', 'integer', 'min:10', 'max:2000'],
+            'decorations.*.rotation' => ['nullable', 'integer', 'min:-180', 'max:180'],
+        ]);
+
+        $layout = ParkingLayout::primary();
+        $decorations = collect($validated['decorations'] ?? [])
+            ->map(function (array $element) {
+                $type = $element['type'] ?? null;
+
+                if ($type === null || $type === '') {
+                    return null;
+                }
+
+                return [
+                    'type' => $type,
+                    'label' => trim((string) ($element['label'] ?? '')),
+                    'x' => (int) ($element['x'] ?? 0),
+                    'y' => (int) ($element['y'] ?? 0),
+                    'width' => (int) ($element['width'] ?? 10),
+                    'height' => (int) ($element['height'] ?? 10),
+                    'rotation' => (int) ($element['rotation'] ?? 0),
+                ];
+            })
+            ->filter()
+            ->values()
+            ->all();
+
+        $layout->update([
+            'name' => $validated['name'],
+            'canvas_width' => $validated['canvas_width'],
+            'canvas_height' => $validated['canvas_height'],
+            'show_grid' => $request->boolean('show_grid'),
+            'decorations' => $decorations,
+        ]);
+
+        foreach ($validated['spots'] as $spotData) {
+            ParkingSpot::query()->whereKey($spotData['id'])->update([
+                'layout_x' => $spotData['layout_x'],
+                'layout_y' => $spotData['layout_y'],
+                'layout_width' => $spotData['layout_width'],
+                'layout_height' => $spotData['layout_height'],
+                'layout_angle' => $spotData['layout_angle'],
+            ]);
+        }
+
+        return to_route('layout.editor')->with('status', 'Plano actualizado correctamente.');
     }
 
     public function checkIn(Request $request): RedirectResponse
@@ -128,5 +208,19 @@ class ParkingDashboardController extends Controller
         $parkingSession->close(now());
 
         return to_route('dashboard')->with('status', 'Salida registrada correctamente.');
+    }
+
+    private function defaultSpotLayout(int $index): array
+    {
+        $column = $index % 5;
+        $row = intdiv($index, 5);
+
+        return [
+            'layout_x' => 120 + ($column * 105),
+            'layout_y' => 90 + ($row * 170),
+            'layout_width' => 82,
+            'layout_height' => 140,
+            'layout_angle' => 0,
+        ];
     }
 }
