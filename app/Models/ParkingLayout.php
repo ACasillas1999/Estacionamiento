@@ -19,6 +19,11 @@ class ParkingLayout extends Model
         'decorations' => 'array',
     ];
 
+    public function parkingSpots(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ParkingSpot::class);
+    }
+
     public static function primary(): self
     {
         return static::query()->firstOrCreate(

@@ -52,20 +52,14 @@
         .side-text span{display:block;margin-top:2px;color:#c4d3e8;font-size:.76rem}
         .side-pill{padding:2px 8px;border-radius:999px;background:linear-gradient(180deg,#86efac,#34d399);color:#0f172a;font-size:.7rem;font-weight:800;box-shadow:0 8px 16px rgba(52,211,153,.22)}
         .side-arrow{color:#dbe7f7;font-size:1rem;opacity:.7}
-        .stats{display:grid;gap:0}
-        .stats-title{padding:12px 14px 10px;color:#c4d3e8;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;border-bottom:1px solid rgba(255,255,255,.05)}
-        .stat{background:transparent;border:0;border-radius:0;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.05);transition:background .18s ease}
-        .stat:last-child{border-bottom:0}
-        .stat:hover{background:rgba(8,15,29,.12)}
-        .stat-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-        .stat-body{display:flex;align-items:center;gap:12px}
-        .stat-info small{display:block;color:#c4d3e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:700}
-        .stat-info strong{display:block;font-size:0.92rem;font-weight:600}
-        .stat-value{font-size:1.35rem;font-weight:800}
-        .stat-total .stat-icon{background:rgba(59,130,246,.15);color:var(--blue)}
-        .stat-available .stat-icon{background:rgba(16,185,129,.15);color:var(--green)}
-        .stat-occupied .stat-icon{background:rgba(245,158,11,.15);color:var(--amber)}
-        .stat-inactive .stat-icon{background:rgba(239,68,68,.15);color:var(--red)}
+        .toolbar-stats{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+        .status-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:12px;background:rgba(8,15,29,.42);border:1px solid rgba(148,163,184,.1);font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+        .status-chip strong{font-size:.88rem;margin-left:2px}
+        .status-chip::before{content:"";width:8px;height:8px;border-radius:999px;background:currentColor;box-shadow:0 0 8px currentColor}
+        .status-chip.total{color:#60a5fa;border-color:rgba(96,165,250,.2)}
+        .status-chip.available{color:#34d399;border-color:rgba(52,211,153,.2)}
+        .status-chip.occupied{color:#fbbf24;border-color:rgba(251,191,36,.2)}
+        .status-chip.inactive{color:#f87171;border-color:rgba(248,113,113,.2)}
 
         .main-shell{padding:10px 0;display:grid;gap:10px;height:100vh;overflow-y:auto;overflow-x:hidden}
         .main-shell::-webkit-scrollbar{width:10px}
@@ -129,6 +123,9 @@
         .layout-building span{align-self:center;justify-self:center;max-width:140px}
         .layout-entry span{align-self:center;justify-self:start;margin-left:14px}
         .layout-label span{background:rgba(8,15,29,.62)}
+        .layout-ramp{background:repeating-linear-gradient(45deg,rgba(148,163,184,.08),rgba(148,163,184,.08) 10px,rgba(148,163,184,.14) 10px,rgba(148,163,184,.14) 20px);border:1px solid rgba(148,163,184,.2);border-radius:12px}
+        .layout-gate{background:linear-gradient(90deg,#ef4444,#ef4444 20%,#fff 20%,#fff 40%,#ef4444 40%,#ef4444 60%,#fff 60%,#fff 80%,#ef4444 80%);box-shadow:0 0 15px rgba(239,68,68,.35);border-radius:999px}
+        .layout-booth{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(37,99,235,.1));border:2px solid rgba(59,130,246,.34);border-radius:14px;box-shadow:inset 0 0 20px rgba(59,130,246,.1)}
         .compass{position:absolute;top:26px;right:30px;width:76px;height:76px;border:1px solid rgba(226,232,240,.2);border-radius:999px;display:grid;place-items:center;background:rgba(7,12,22,.5);box-shadow:0 14px 22px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.04)}
         .compass::before,.compass::after{content:"";position:absolute;background:rgba(226,232,240,.4)}
         .compass::before{width:1px;height:52px}
@@ -314,7 +311,7 @@
                             </span>
                             <span class="side-arrow">></span>
                         </button>
-                        <a href="{{ route('layout.editor') }}" class="side-link" aria-label="Editar plano">
+                        <a href="{{ route('layout.editor', ['layout_id' => $layout->id]) }}" class="side-link" aria-label="Editar plano">
                             <span class="side-icon">@</span>
                             <span class="side-text">
                                 <strong>Editar plano</strong>
@@ -341,26 +338,8 @@
                     </div>
                 </div>
 
-                <div class="sidebar-card">
-                    <h2 style="font-size:0.9rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:16px">Estadísticas</h2>
-                    <section class="stats">
-                        <article class="stat stat-total">
-                            <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg></div>
-                            <div class="stat-info"><small>Total</small><strong>{{ $stats['total'] }}</strong></div>
-                        </article>
-                        <article class="stat stat-available">
-                            <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
-                            <div class="stat-info"><small>Libres</small><strong>{{ $stats['available'] }}</strong></div>
-                        </article>
-                        <article class="stat stat-occupied">
-                            <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
-                            <div class="stat-info"><small>Ocupados</small><strong>{{ $stats['occupied'] }}</strong></div>
-                        </article>
-                        <article class="stat stat-inactive">
-                            <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
-                            <div class="stat-info"><small>Inactivos</small><strong>{{ $stats['inactive'] }}</strong></div>
-                        </article>
-                    </section>
+                <div class="sidebar-card" style="border-top:0">
+                    <!-- Stats moved to toolbar -->
                 </div>
             </aside>
 
@@ -368,7 +347,19 @@
                 <section class="content-grid">
                     <section class="panel plan-panel">
                         <div class="plan-toolbar">
-                            <div class="plan-toolbar-copy">Ajusta el plano al espacio disponible o usa zoom manual si necesitas mas detalle.</div>
+                            <div class="toolbar-stats">
+                                <div class="field" style="margin-right:12px">
+                                    <select onchange="window.location.href = '{{ route('dashboard') }}?layout_id=' + this.value" style="padding:4px 10px; font-size:0.75rem; border-radius:10px; background:rgba(15,23,42,.6)">
+                                        @foreach ($layouts as $l)
+                                            <option value="{{ $l->id }}" @selected($l->id === $layout->id)>{{ $l->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <span class="status-chip total">Total <strong>{{ $stats['total'] }}</strong></span>
+                                <span class="status-chip available">Libres <strong>{{ $stats['available'] }}</strong></span>
+                                <span class="status-chip occupied">Ocupados <strong>{{ $stats['occupied'] }}</strong></span>
+                                <span class="status-chip inactive">Inactivos <strong>{{ $stats['inactive'] }}</strong></span>
+                            </div>
                             <div class="plan-tools">
                                 <button type="button" class="plan-tool-btn" data-plan-pan aria-label="Mover plano">
                                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -574,6 +565,7 @@
 
             <form method="POST" action="{{ route('sessions.check-in') }}" class="form-grid">
                 @csrf
+                <input type="hidden" name="parking_layout_id" value="{{ $layout->id }}">
                 <input type="hidden" id="parking_spot_id" name="parking_spot_id" value="{{ old('parking_spot_id') }}">
 
                 <div class="form-row">
@@ -639,6 +631,7 @@
 
             <form method="POST" action="{{ route('spots.store') }}" class="form-grid">
                 @csrf
+                <input type="hidden" name="parking_layout_id" value="{{ $layout->id }}">
                 <div class="form-row">
                     <div class="field">
                         <label>Codigo</label>
@@ -728,7 +721,7 @@
         }
 
         if (sidebarStatsTitle) {
-            sidebarStatsTitle.outerHTML = '<div class="stats-title">Resumen actual</div>';
+            sidebarStatsTitle.remove();
         }
 
         function updateSidebarToggleButton(side) {

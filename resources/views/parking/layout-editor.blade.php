@@ -28,15 +28,15 @@
         .panel{background:linear-gradient(180deg,rgba(14,23,40,.9),rgba(10,18,32,.84));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;min-height:0}
         .panel h2{margin:0 0 8px;font-size:1.08rem}
         .panel p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.45}
-        .inspector-overview{padding:18px;background:linear-gradient(180deg,rgba(21,34,58,.96),rgba(12,21,37,.92));border-color:rgba(96,165,250,.18)}
-        .overview-kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(59,130,246,.14);border:1px solid rgba(96,165,250,.2);color:#bfdbfe;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
-        .overview-kicker::before{content:"";width:10px;height:10px;border-radius:999px;background:linear-gradient(180deg,#60a5fa,#2563eb);box-shadow:0 0 0 5px rgba(59,130,246,.12)}
-        .overview-title{margin:14px 0 6px;font-size:1.2rem;font-weight:800}
-        .overview-copy{color:#bfd1e8;font-size:.9rem;line-height:1.55}
-        .overview-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
-        .overview-stat{padding:12px 10px;border-radius:16px;background:rgba(8,15,29,.56);border:1px solid rgba(148,163,184,.12)}
-        .overview-stat strong{display:block;font-size:1.05rem;color:#fff}
-        .overview-stat span{display:block;margin-top:4px;color:var(--muted);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+        .inspector-overview{padding:14px;background:linear-gradient(180deg,rgba(21,34,58,.96),rgba(12,21,37,.92));border-color:rgba(96,165,250,.18)}
+        .overview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+        .overview-kicker{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:rgba(59,130,246,.12);border:1px solid rgba(96,165,250,.16);color:#a5c8ff;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+        .overview-kicker::before{content:"";width:6px;height:6px;border-radius:999px;background:linear-gradient(180deg,#60a5fa,#2563eb);box-shadow:0 0 0 4px rgba(59,130,246,.1)}
+        .overview-title{margin:0;font-size:1.05rem;font-weight:800}
+        .overview-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+        .overview-stat{padding:8px 10px;border-radius:12px;background:rgba(8,15,29,.42);border:1px solid rgba(148,163,184,.1)}
+        .overview-stat strong{display:block;font-size:.95rem;color:#fff}
+        .overview-stat span{display:block;margin-top:2px;color:var(--muted);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase}
         .inspector-panel{position:relative;overflow:hidden}
         .inspector-panel::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;border-radius:999px;background:linear-gradient(180deg,rgba(96,165,250,.95),rgba(37,99,235,.1))}
         .panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
@@ -66,7 +66,15 @@
         .preview-shell{overflow:auto;border-radius:18px;border:1px solid var(--line);background:rgba(8,15,29,.9);padding:12px;min-height:0;height:100%;display:flex;align-items:flex-start;justify-content:center}
         .preview-stage{position:relative;flex:0 0 auto;margin:auto;transform-origin:top left}
         .parking-canvas{position:absolute;left:0;top:0;background:linear-gradient(rgba(86,110,145,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(86,110,145,.12) 1px,transparent 1px),linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));background-size:32px 32px,32px 32px,100% 100%;border:2px solid rgba(226,232,240,.35);border-radius:24px;transform-origin:top left}.parking-canvas.no-grid{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01))}.parking-canvas::before{content:"";position:absolute;inset:18px;border:1px dashed rgba(226,232,240,.22);border-radius:18px;pointer-events:none}
-        .layout-item{position:absolute;display:grid;place-items:center;color:#d7e3f8;text-align:center;transform-origin:center center}.layout-item span{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase}.layout-lane{border:1px dashed rgba(226,232,240,.28);background:rgba(255,255,255,.02);border-radius:18px}.layout-island{border:2px solid rgba(226,232,240,.36);border-radius:26px;background:rgba(148,163,184,.06)}.layout-building{border:1px solid rgba(148,163,184,.34);background:rgba(30,41,59,.74);border-radius:10px}.layout-entry{border:1px dashed rgba(96,165,250,.38);border-radius:14px;background:rgba(59,130,246,.06)}.layout-label{background:transparent}
+        .layout-item{position:absolute;display:grid;place-items:center;color:#d7e3f8;text-align:center;transform-origin:center center}.layout-item span{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase}
+        .layout-lane{border:1px dashed rgba(226,232,240,.28);background:rgba(255,255,255,.02);border-radius:18px}
+        .layout-island{border:2px solid rgba(226,232,240,.36);border-radius:26px;background:rgba(148,163,184,.06)}
+        .layout-building{border:1px solid rgba(148,163,184,.34);background:rgba(30,41,59,.74);border-radius:10px}
+        .layout-entry{border:1px dashed rgba(96,165,250,.38);border-radius:14px;background:rgba(59,130,246,.06)}
+        .layout-label{background:transparent}
+        .layout-ramp{background:repeating-linear-gradient(45deg,rgba(148,163,184,.08),rgba(148,163,184,.08) 10px,rgba(148,163,184,.14) 10px,rgba(148,163,184,.14) 20px);border:1px solid rgba(148,163,184,.2);border-radius:8px}
+        .layout-gate{width:100%;height:3px;background:linear-gradient(90deg,#ef4444,#ef4444 20%,#fff 20%,#fff 40%,#ef4444 40%,#ef4444 60%,#fff 60%,#fff 80%,#ef4444 80%);box-shadow:0 0 10px rgba(239,68,68,.3);border-radius:999px}
+        .layout-booth{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(37,99,235,.1));border:2px solid rgba(59,130,246,.34);border-radius:12px;box-shadow:inset 0 0 15px rgba(59,130,246,.1)}
         .preview-note{display:none}
         .preview-tools{display:flex;gap:8px;flex-wrap:wrap}
         .preview-chip{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(8,15,29,.56);border:1px solid rgba(148,163,184,.12);color:#d9e5f6;font-size:.74rem}
@@ -116,9 +124,33 @@
             <section class="layout-grid">
                 <div class="stack inspector-stack">
                     <section class="panel inspector-overview">
-                        <span class="overview-kicker">Panel lateral</span>
-                        <div class="overview-title">Control del editor</div>
-                        <p class="overview-copy">Ajusta el lienzo, agrega elementos y mantén el plano visible mientras ordenas tu parque vehicular.</p>
+                        <div class="overview-head">
+                            <div class="overview-title">Gestion de Niveles</div>
+                            <span class="overview-kicker">Multi-piso</span>
+                        </div>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label>Seleccionar piso</label>
+                                <select onchange="window.location.href = '{{ route('layout.editor') }}?layout_id=' + this.value">
+                                    @foreach ($layouts as $l)
+                                        <option value="{{ $l->id }}" @selected($l->id === $layout->id)>{{ $l->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('new-layout-modal').showModal()">Nuevo piso</button>
+                                @if ($layouts->count() > 1)
+                                    <button type="submit" form="delete-layout-form-{{ $layout->id }}" class="btn btn-danger" style="width:100%">Eliminar</button>
+                                @endif
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="panel inspector-overview">
+                        <div class="overview-head">
+                            <div class="overview-title">Resumen del piso</div>
+                            <span class="overview-kicker">Actual</span>
+                        </div>
                         <div class="overview-stats">
                             <div class="overview-stat">
                                 <strong>{{ $spots->count() }}</strong>
@@ -148,8 +180,9 @@
                         @endif
                         <div class="section-note">Los cambios del lienzo se reflejan al instante en la vista previa de la derecha.</div>
                         <div class="form-grid" style="margin-top:12px">
+                            <input type="hidden" name="id" value="{{ $layout->id }}">
                             <div class="field">
-                                <label>Nombre del plano</label>
+                                <label>Nombre del nivel</label>
                                 <input type="text" name="name" value="{{ old('name', $layout->name) }}" required>
                             </div>
                             <div class="form-row">
@@ -196,7 +229,7 @@
                                         <div class="field">
                                             <label>Tipo</label>
                                             <select name="decorations[{{ $index }}][type]" data-decoration-input data-decoration-field="type">
-                                                @foreach (['lane' => 'Bahia', 'island' => 'Isla', 'building' => 'Edificio', 'entry' => 'Acceso', 'label' => 'Etiqueta'] as $type => $label)
+                                                @foreach (['lane' => 'Bahia', 'island' => 'Isla', 'building' => 'Edificio', 'entry' => 'Acceso', 'label' => 'Etiqueta', 'ramp' => 'Rampa', 'gate' => 'Pluma', 'booth' => 'Caseta'] as $type => $label)
                                                     <option value="{{ $type }}" @selected(($decoration['type'] ?? '') === $type)>{{ $label }}</option>
                                                 @endforeach
                                             </select>
@@ -307,7 +340,7 @@
                 <button type="button" class="btn btn-danger" data-remove-decoration>Quitar</button>
             </div>
             <div class="form-row">
-                <div class="field"><label>Tipo</label><select data-decoration-input data-decoration-field="type"><option value="lane">Bahia</option><option value="island">Isla</option><option value="building">Edificio</option><option value="entry">Acceso</option><option value="label">Etiqueta</option></select></div>
+                <div class="field"><label>Tipo</label><select data-decoration-input data-decoration-field="type"><option value="lane">Bahia</option><option value="island">Isla</option><option value="building">Edificio</option><option value="entry">Acceso</option><option value="label">Etiqueta</option><option value="ramp">Rampa</option><option value="gate">Pluma</option><option value="booth">Caseta</option></select></div>
                 <div class="field"><label>Texto</label><input type="text" data-decoration-input data-decoration-field="label"></div>
             </div>
             <div class="mini-grid">
@@ -319,6 +352,28 @@
             <div class="field" style="margin-top:10px"><label>Rotacion</label><input type="number" value="0" data-decoration-input data-decoration-field="rotation"></div>
         </div>
     </template>
+
+    <dialog id="new-layout-modal" class="panel" style="border:1px solid var(--blue); width: 400px; padding: 20px; color: var(--text);">
+        <form method="POST" action="{{ route('layout.store') }}">
+            @csrf
+            <h2 style="margin-top:0">Nuevo nivel</h2>
+            <div class="field" style="margin-bottom:14px">
+                <label>Nombre del nivel</label>
+                <input type="text" name="name" placeholder="Ej. Piso 2, Sotano..." required style="background:#000">
+            </div>
+            <div class="form-row">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('new-layout-modal').close()">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Crear nivel</button>
+            </div>
+        </form>
+    </dialog>
+
+    @if ($layouts->count() > 1)
+        <form id="delete-layout-form-{{ $layout->id }}" method="POST" action="{{ route('layout.destroy', $layout) }}" onsubmit="return confirm('¿Seguro que quieres eliminar este nivel?')">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endif
 
     <script>
         const canvas = document.querySelector('[data-layout-preview]');

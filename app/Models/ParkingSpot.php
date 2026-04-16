@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class ParkingSpot extends Model
 {
     protected $fillable = [
+        'parking_layout_id',
         'code',
         'zone',
         'is_active',
@@ -21,6 +22,7 @@ class ParkingSpot extends Model
     ];
 
     protected $casts = [
+        'parking_layout_id' => 'integer',
         'is_active' => 'boolean',
         'layout_x' => 'integer',
         'layout_y' => 'integer',
@@ -28,6 +30,11 @@ class ParkingSpot extends Model
         'layout_height' => 'integer',
         'layout_angle' => 'integer',
     ];
+
+    public function parkingLayout(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ParkingLayout::class);
+    }
 
     public function sessions(): HasMany
     {
